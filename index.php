@@ -1,10 +1,23 @@
 <?php
 
     $presentTime = new DateTime();
-    $destinationTime = new DateTime('1988-07-20');
+    $presentTimeDisplay = $presentTime->format('F d Y A g:i');
 
-    $presentTime = $presentTime->format('F d Y A g:i')
+    $destinationTime = new DateTime('1988-07-20 03:40:00');
+    $destinationTimeDisplay = $destinationTime->format('F d Y A g:i');
+    
+    $interval = $presentTime->diff($destinationTime);
+    $intervalDisplay = $interval->format('%Y YEAR(S) %M MONTH(S) %D DAY(S) %H:%I HOUR(S)');
 
+    $inThePastOrFuture = '';
+    if ($interval->invert === 1) {
+        $inThePastOrFuture = 'PAST';
+    } else {
+        $inThePastOrFuture = 'FUTURE';
+    }
+
+    $intervalInMinutes = ($interval->days*24*60);
+    $litersOfFuelRequired = ($intervalInMinutes/10000);
 
 ?>
 
@@ -26,7 +39,25 @@
 <body>
 
     <div class="dashBoard">
-        <p><?= $presentTime ?></p>
+        <p class="mx-5 text-center bg-dark destinationTime"><?= $destinationTimeDisplay ?></p>
+        <h2 class="mx-5 text-center bg-dark text-white fs-5">DESTINATION TIME</h2>
+        <hr>
+        <p class="mx-5 text-center bg-dark presentTime"><?= $presentTimeDisplay ?></p>
+        <h2 class="mx-5 text-center bg-dark text-white fs-5">PRESENT TIME</h2>
+    </div>
+
+    <div class="dashBoard2">
+        <p class="mx-4 text-center bg-dark interval"><?= $intervalDisplay ?></p>
+        <h2 class="mx-5 text-center bg-dark text-white fs-5">INTERVAL</h2>
+        <hr>
+        <p class="mx-5 text-center bg-dark inThePastOrFuture"><?= $inThePastOrFuture ?></p>
+        <h2 class="mx-5 text-center bg-dark text-white fs-5">IN THE PAST OR FUTURE</h2>
+        <hr>
+        <p class="mx-5 text-center bg-dark intervalInMinutes"><?= $intervalInMinutes ?></p>
+        <h2 class="mx-5 text-center bg-dark text-white fs-5">INTERVAL IN MINUTES</h2>
+        <hr>
+        <p class="mx-5 text-center bg-dark litersOfFuelRequired"><?= $litersOfFuelRequired ?> L</p>
+        <h2 class="mx-5 text-center bg-dark text-white fs-5">FUEL REQUIRED</h2>
     </div>
 
 </body>
